@@ -20,8 +20,8 @@ from app.models.product import Product
 config = context.config
 
 # Переопределяем URL базы данных из файла config.py
-sync_database_url = f"postgresql+psycopg2://{settings.POSTGRES_USER}:{settings.POSTGRES_PASSWORD}@{settings.POSTGRES_HOST}:{settings.POSTGRES_PORT}/{settings.POSTGRES_DB}"
-config.set_main_option("sqlalchemy.url", sync_database_url)
+async_database_url = f"postgresql+asyncpg://{settings.POSTGRES_USER}:{settings.POSTGRES_PASSWORD}@{settings.POSTGRES_HOST}:{settings.POSTGRES_PORT}/{settings.POSTGRES_DB}"
+config.set_main_option("sqlalchemy.url", async_database_url)
 
 # Interpret the config file for Python logging.
 # This line sets up loggers basically.
