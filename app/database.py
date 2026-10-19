@@ -1,7 +1,5 @@
-from sqlalchemy import false
-from sqlalchemy.engine import create
 from sqlalchemy.ext.asyncio import create_async_engine, async_session, async_sessionmaker, AsyncSession
-from sqlalchemy.orm import DeclarativeBase
+from sqlalchemy.orm import DeclarativeBase, declarative_base
 
 from app.config import settings
 
@@ -13,9 +11,15 @@ async_session_marker = async_sessionmaker(
     expire_on_commit=False
 )
 
-class Base(DeclarativeBase):
-    pass
+Base = declarative_base()
 
-async def get_async_session():
+import app.models
+
+async def get_db() -> AsyncSession:
+    """Генератор сессий для эндпоинтов"""
     async with async_session_marker() as session:
         yield session
+
+# async def get_async_session():
+#     async with async_session_marker() as session:
+#         yield session

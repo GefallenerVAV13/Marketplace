@@ -11,3 +11,9 @@ class Product(Base):
     description:Mapped[str | None] = mapped_column(Text, nullable=True)
     price:Mapped[int] = mapped_column(Numeric(10, 2), nullable=False)
     stock:Mapped[int] = mapped_column(Integer, default=0, nullable=False)
+
+    category_id: Mapped[int] = mapped_column(ForeignKey("categories.id"), nullable=False)
+    seller_id: Mapped[int] = mapped_column(ForeignKey("users.id"), nullable=False)
+
+    category = relationship("Category", back_populates="products")
+    seller = relationship("User")

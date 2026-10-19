@@ -18,8 +18,4 @@ class User(Base):
     role: Mapped[UserRole] = mapped_column(SQLEnum(UserRole), default=UserRole.CUSTOMER, nullable=False)
     is_active: Mapped[bool] = mapped_column(Boolean, default=True, nullable=False)
 
-    category_id:Mapped[int] = mapped_column(ForeignKey("categories.id"), nullable=False)
-    seller_id:Mapped[int] = mapped_column("users.id", nullable=False)
-
-    category = relationship("Category", back_populates="products")
-    seller = relationship("User")
+    products = relationship("Product", back_populates="seller")

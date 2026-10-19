@@ -1,18 +1,16 @@
-from fastapi import FastAPI, Depends
-from sqlalchemy.ext.asyncio import AsyncSession
-from sqlalchemy import text
-from app.database import get_async_session
+from fastapi import FastAPI
+from app.api.v1.categories import router as categories_router
 
-app = FastAPI(title="Marketplace API")
+app = FastAPI(title="Marketplace API", version="1.0.0")
+
+app.include_router(categories_router, prefix="/api/v1")
 
 
 @app.get("/")
 async def root():
-    return {"message": "Marketplace API is running!"}
+    return {"message": "Welcome to Marketplace API"}
 
 
 @app.get("/healthcheck")
-async def healthcheck(db: AsyncSession = Depends(get_async_session)):
-    # Выполняем простой запрос к БД для проверки связи
-    result = await db.execute(text("SELECT 1"))
-    return {"database": "connected", "result": result.scalar()}
+async def healthcheck():
+    return {"status": "OK"}
